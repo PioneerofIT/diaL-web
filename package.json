@@ -1,0 +1,23 @@
+{
+    "name": "vue-sample",
+    "version": "1.0.0",
+    "description": "A Vue.js project",
+    "main": "main.js",
+    "scripts": {
+        "serve": "vue-cli-service serve",
+        "build": "vue-cli-service build"
+    },
+    "dependencies": {
+        "vue": "^2.6.14",
+        "vue-router": "^3.6.5"
+    },
+    "devDependencies": {
+        "@vue/cli-service": "^4.5.13",
+        "vue-template-compiler": "^2.6.14"
+    },
+    "browserslist": [
+        "> 1%",
+        "last 2 versions",
+        "not dead"
+    ]
+}
