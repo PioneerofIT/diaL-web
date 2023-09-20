@@ -6,13 +6,14 @@ phases:
       nodejs: 18
     commands:
       - echo "Pre-build phase"
+      - npm install
+      - npm install -g @vue/cli
   build:
     commands:
-    - npm install
-    - npm install -g @vue/cli
     - npm run build
   post_build:
     commands:
+      - pwd
       - echo "Post-build phase"
 
 artifacts:
