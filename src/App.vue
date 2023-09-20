@@ -44,7 +44,7 @@
   <template>
     <div >
       <div class="title-container">
-        <h1 class="main-title">diaL Lab 관리자 페이지 </h1>
+        <h1 class="main-title">CI/CD Testing </h1>
         <p class="sub-title">타겟 장소: 한밭대학교 N5 302호</p>
         <div>{{ data }}</div> 
       </div>
