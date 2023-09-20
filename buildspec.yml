@@ -3,13 +3,15 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 18
+      nodejs: 1
     commands:
       - echo "Pre-build phase"
+      - npm install axios
       - npm install
   build:
     commands:
       - npm run build
+
   post_build:
     commands:
       - echo "Post-build phase"
