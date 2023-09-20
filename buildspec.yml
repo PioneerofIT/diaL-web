@@ -6,11 +6,11 @@ phases:
       nodejs: 18
     commands:
       - echo "Pre-build phase"
-      - npm install
-      - npm install -g @vue/cli
   build:
     commands:
-      - npm run build
+    - npm install
+    - npm install -g @vue/cli
+    - npm run build
   post_build:
     commands:
       - echo "Post-build phase"
