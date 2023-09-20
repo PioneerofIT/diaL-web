@@ -1,9 +1,52 @@
   <!-- 모든 컴포넌트의 집합  -->
+  <script>
+  import axios from 'axios';
+
+  export default {
+    data() {
+      return {
+        message: 'diaL-Web 공사중',
+        data: null,
+        loading: false,
+        error: null,
+        assetId: '83ecd1bb-0edb-4b38-9d45-667ac1a500e2'
+      };
+    },
+    created() {
+      this.fetchAssetData();
+    },
+    methods: {
+    onMenuClick(menuItem) {
+      if(menuItem == 'Menu 1') {
+        this.$router.push('/LiveSensorPage');
+      }
+    },
+    //api endpoint로 부터 lambda 정보 전달
+    async fetchAssetData() {
+      this.loading = true;
+      this.error = null;
+      try {
+        const API_URL = `https://p3j7hfgon0.execute-api.us-west-2.amazonaws.com/`;
+       
+        const response = await axios.get(API_URL);
+        this.data = response.data;
+      } catch (error) {
+        console.error('Error fetching asset data:', error);
+      } finally {
+        this.loading = false;
+      }
+    }
+  }
+  }
+  </script>
+  
+  
   <template>
     <div >
       <div class="title-container">
         <h1 class="main-title">diaL Lab 관리자 페이지 </h1>
         <p class="sub-title">타겟 장소: 한밭대학교 N5 302호</p>
+        <div>{{ data }}</div> 
       </div>
       <nav>
         <router-link to ="/" class="menu-button"> Home</router-link>
@@ -15,27 +58,7 @@
       <router-view></router-view>
     </div>
   </template>
-  
-  
-
-  <script>
-  export default {
-    data() {
-      return {
-        message: 'diaL-Web 공사중'
-      };
-    },
-    methods: {
-    onMenuClick(menuItem) {
-      if(menuItem == 'Menu 1') {
-        this.$router.push('/LiveSensorPage');
-      }
-    }
-  }
-  
-  }
-  </script>
-  
+    
   <style scoped>
   @media (max-width: 768px) { /* 768px 이하의 화면 너비에 대한 스타일 적용 */
   .menu-button {
