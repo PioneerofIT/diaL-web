@@ -1,5 +1,5 @@
 version: 0.0
 os: linux
 files:
-  - source: dist/*
+  - source: /
     destination: /usr/share/nginx/html/
