@@ -1,7 +1,7 @@
 version: 0.0
 os: linux
 files:
-  - source: /codebuild/output/src2399667400/src/dist
+  - source: /BuildResult/dist/
     destination: /var/www/html/
 permissions:
   - object: /var/www/html/
