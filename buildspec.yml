@@ -7,7 +7,7 @@ phases:
     commands:
       - echo "Pre-build phase"
       - npm install
-      - npm install @vue/cli-service --save-dev
+      - npm install -g @vue/cli
   build:
     commands:
       - npm run build
