@@ -3,11 +3,11 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 20
+      nodejs: 18
     commands:
       - echo "Pre-build phase"
-      - npm install axios
       - npm install
+      - npm install @vue/cli-service --save-dev
   build:
     commands:
       - npm run build
