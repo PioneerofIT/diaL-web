@@ -11,6 +11,7 @@ phases:
   build:
     commands:
     - npm run build
+    - npm run export;
   post_build:
     commands:
       - pwd
@@ -18,4 +19,5 @@ phases:
 
 artifacts:
   files:
-    - /dist
+    - '**/*'
+     base-directory: 'dist'
