@@ -2,7 +2,7 @@
 export default {
   data() {
     return {
-      src: 'http://52.36.71.154:3000/d-solo/ENk1jS84k/test?orgId=1&refresh=5s&from=1694573098947&to=1694594698947&panelId=',
+      src: 'http://35.91.41.146:3000/d-solo/ENk1jS84k/test?orgId=1&refresh=5s&from=1694573098947&to=1694594698947&panelId=',
       panelSrc: ''
     };
   },
