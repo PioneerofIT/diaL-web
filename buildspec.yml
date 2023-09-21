@@ -3,20 +3,17 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 16
+      nodejs: 18
     commands:
-      - echo "Pre-build phase"
-      - npm install
       - npm install -g @vue/cli
+      - npm install
   build:
     commands:
-    - npm run build
-  post_build:
-    commands:
-      - pwd
-      - echo "Post-build phase"
+      - npm run build
 
 artifacts:
   files:
     - '**/*'
+    - 'appspec.yml'
   base-directory: 'dist'
+
