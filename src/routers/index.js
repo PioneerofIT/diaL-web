@@ -31,24 +31,7 @@ export default new Router({
       path: '/LiveCCTV',
       name: 'LiveCCTV',
       component: () => import('../component/LiveCCTV.vue') 
-    },
-    {
-      path: '/LiveSensorPage/co',
-      name: 'co',
-      component: () => import('../component/data/co.vue') 
-    },
-    {
-      path: '/LiveSensorPage/huminity',
-      name: 'huminity',
-      component: () => import('../component/data/huminity.vue') 
-    },
-    {
-      path: '/LiveSensorPage/temperature',
-      name: 'temperature',
-      component: () => import('../component/data/temperature.vue') 
-    }
-    
-    
+    }    
   ]
 });
 
