@@ -12,9 +12,6 @@
         assetId: '83ecd1bb-0edb-4b38-9d45-667ac1a500e2'
       };
     },
-    created() {
-      this.fetchAssetData();
-    },
     methods: {
     onMenuClick(menuItem) {
       if(menuItem == 'Menu 1') {
@@ -22,20 +19,6 @@
       }
     },
     //api endpoint로 부터 lambda 정보 전달
-    async fetchAssetData() {
-      this.loading = true;
-      this.error = null;
-      try {
-        const API_URL = `https://p3j7hfgon0.execute-api.us-west-2.amazonaws.com/`;
-       
-        const response = await axios.get(API_URL);
-        this.data = response.data;
-      } catch (error) {
-        console.error('Error fetching asset data:', error);
-      } finally {
-        this.loading = false;
-      }
-    }
   }
   }
   </script>
