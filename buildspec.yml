@@ -5,8 +5,8 @@ phases:
     runtime-versions:
       nodejs: 18
     commands:
-      - npm install -g @vue/cli
       - npm install
+      - npm install -g @vue/cli
   build:
     commands:
       - npm run build
