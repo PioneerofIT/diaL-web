@@ -65,11 +65,11 @@
         <router-link to ="/TwinPage" class="menu-button"> 3D 가상 건물 </router-link> 
       </nav>
       <router-view></router-view>
-      <div>
-        <p> 지역 : {{ city  }}</p>
-        <p> 날씨 : {{ weather }}</p>
-        <p> 온도 : {{ temperature }}</p>
-        <p> 습도 {{ humidity  }}%</p>
+      <div class="weather-info">
+        <p class="weather">지역 : {{ city }}</p>
+        <p>날씨 : {{ weather }}</p>
+        <p>온도 : {{ temperature }}</p>
+        <p>습도 : {{ humidity }}%</p>
       </div>
     </div>
   </template>
@@ -121,5 +121,30 @@
     margin-left: 60px;
     font-size: 16px;
   }
+
+  /* 감싸는 div 스타일링 */
+.weather-info {
+    background-color: #f5f5f5; /* 배경색 설정 */
+    padding: 20px; /* 내부 여백 설정 */
+    border-radius: 10px; /* 모서리 둥글게 */
+    width: 250px; /* 너비 설정 */
+    margin: 20px auto; /* 중앙 정렬 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+/* 각 p 태그 스타일링 */
+.weather-info p {
+    font-size: 18px; /* 글자 크기 */
+    margin-bottom: 15px; /* 각 p 태그 사이의 간격 설정 */
+    font-weight: bold; /* 볼드체 */
+}
+
+/* 특정 텍스트에만 색상을 적용하고 싶다면, 클래스를 추가하여 스타일링 */
+p.weather {
+    color: #3498db; /* 특정 색상 */
+    font-size: large;
+}
+
   
   </style>

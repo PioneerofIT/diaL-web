@@ -11,7 +11,6 @@ export default {
       error: null,
       panelSrc: '',
       tmp: null,  
-      
     };
   },
   methods: {
@@ -22,32 +21,45 @@ export default {
         const API_URL = `https://p3j7hfgon0.execute-api.us-west-2.amazonaws.com/`;
         const response = await axios.get(API_URL);
         this.apiData = response.data;
+        this.updateTmpData();  // apiData가 업데이트되면 updateTmpData 호출
       } catch (error) {
         console.error('Error fetching asset data:', error);
       } finally {
         this.loading = false;
       }
+      
+
     },
-    chpannel(id) {
-      this.panelSrc = this.src + id;
-      if (id == 4) { // apiData가 null이 아닌 경우만 처리합니다.
+    updateTmpData() {
+      if(this.currentId == 4) {
         this.tmp = "현재 온도 :" + this.apiData.doubleValues[0] + "°C";
-         
-      }
-      else if(id == 6) {
-        this.tmp = "현재 습도 :" + this.apiData.doubleValues[2] + "%" ;
-      }
-      else if(id == 8) {
+      } else if (this.currentId == 6) {
+        this.tmp = "현재 습도 :" + this.apiData.doubleValues[2] + "%";
+      } else if (this.currentId == 8) {
         this.tmp = "현재 CO농도 :" + this.apiData.doubleValues[1] + "ppm";
       }
-      
+    },
+    chpannel(id) {
+      this.currentId = id;  // 현재 선택된 ID를 저장
+      this.panelSrc = this.src + id;
+      this.fetchAssetData();
+      this.intervalForChpannel = setInterval(() => {
+        this.fetchAssetData();
+      }, 3000);
     }
-  },
+},
   mounted() {
-    this.fetchAssetData();
+    this.fetchAssetData(); 
+    this.interval = setInterval(this.fetchAssetData, 3000); 
+  },
+
+  beforeDestroy() {
+    clearInterval(this.interval); // 컴포넌트가 파괴되기 전에 setInterval을 정지합니다.
   }
-};
+
+}
 </script>
+
 
 
 
@@ -85,15 +97,15 @@ export default {
   border: 0px;
 }
 .tmp {
-  color: green; 
+  color: #42b983; 
   font-size:larger;
   text-align: center;
-  font-family: 'Roboto Slab', serif;  /* Google Fonts에서 "Roboto Slab"을 가져와 적용 */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);  /* 텍스트 그림자 */
-  text-transform: uppercase;  /* 대문자 변형 */
-  background-color: rgba(255, 255, 255, 0.1);  /* 약간의 배경 */
-  padding: 10px;  /* 패딩 추가 */
-  border-radius: 8px;  /* 모서리 둥글게 */
+  font-family: 'Roboto Slab', serif;  
+  text-transform: uppercase;  
+  background-color: rgba(255, 255, 255, 0.1);  
+  padding: 10px;  
+  border-radius: 8px;
+  font-weight: bold;  
 }
 
 </style>
