@@ -43,6 +43,7 @@
   },
   created() {
       this.searchWeather();
+      document.title = "diaL 화재 관리 관리자"
     }      
 }
   
@@ -145,6 +146,5 @@ p.weather {
     color: #3498db; /* 특정 색상 */
     font-size: large;
 }
-
   
   </style>
