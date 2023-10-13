@@ -5,7 +5,7 @@
   export default {
     data() {
       return {
-        message: 'diaL-Web 공사중',
+
         data: null,
         loading: false,
         error: null,
@@ -25,7 +25,6 @@
     },
     searchWeather() {
       const BASE_URL = 'https://api.openweathermap.org/data/2.5/weather?lat=36.34&lon=127.28&appid=66642b3fa015dc2047aff31ed3ff29e4&units=metric';
-;
       axios.get(BASE_URL)
       .then((result) => {
         console.log(result.data);
@@ -39,14 +38,12 @@
       console.error("Error fetching weather data:", error);
       });
     },
-  
   },
   created() {
       this.searchWeather();
       document.title = "diaL 화재 관리 관리자"
     }      
 }
-  
   </script>
   
   
@@ -54,7 +51,7 @@
     <div >
       <div class="title-container">
         <img src = "../public/static/Dial-icon.jpg" alt="Icon Description" class="icon">
-        <h1 class="main-title">diaL 화재 관리자 페이지 </h1>
+        <h1 class="main-title">2023 캡스톤디자인 테스트 영상 </h1>
       </div>
       <p class="sub-title">타겟 장소: 한밭대학교 N5 302호</p>
 

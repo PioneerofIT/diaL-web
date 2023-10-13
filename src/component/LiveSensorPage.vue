@@ -27,8 +27,6 @@ export default {
       } finally {
         this.loading = false;
       }
-      
-
     },
     updateTmpData() {
       if(this.currentId == 4) {
