@@ -1,6 +1,6 @@
 <template>
     <div class="sensor-page">
-        <iframe src="http://52.36.71.154:3000/d-solo/ENk1jS84k/test?orgId=1&refresh=5s&from=1694573107918&to=1694594707918&panelId=10" width="450" height="200" frameborder="0"></iframe>
+        <iframe src="http://52.36.71.154:3000/d-solo/ENk1jS84k/test?orgId=1&panelId=10" width="450" height="200" frameborder="0"></iframe>
     </div>
   </template>
   

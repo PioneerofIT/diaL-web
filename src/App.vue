@@ -5,6 +5,8 @@
   export default {
     data() {
       return {
+        expanded: false,
+        text: 'ex',
         message: 'diaL-Web 공사중',
         data: null,
         loading: false,
@@ -23,6 +25,9 @@
         this.$router.push('/LiveSensorPage');
       }
     },
+    toggleExpanded() {
+    this.expanded = !this.expanded;
+   },
     searchWeather() {
       const BASE_URL = 'https://api.openweathermap.org/data/2.5/weather?lat=36.34&lon=127.28&appid=66642b3fa015dc2047aff31ed3ff29e4&units=metric';
 ;
@@ -41,7 +46,7 @@
     },
   
   },
-  created() {
+  created() { 
       this.searchWeather();
     }      
 }
@@ -72,6 +77,8 @@
         <p>습도 : {{ humidity }}%</p>
       </div>
     </div>
+
+    
   </template>
     
   <style scoped>
