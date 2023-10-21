@@ -1,21 +1,18 @@
 <template>
-    <div class="sensor-page">
-        <iframe src="http://52.36.71.154:3000/d-solo/ENk1jS84k/test?orgId=1&panelId=10" width="450" height="200" frameborder="0"></iframe>
-    </div>
+    <div class="test">
+        <div class="sensor-page" align="center">
+            <iframe src="http://52.36.71.154:3000/d-solo/ENk1jS84k/test?orgId=1&panelId=10" width="95%" height="500px" frameborder="0"></iframe>
+        </div>
+    </div>  
   </template>
   
   <style scoped>
-  .sensor-page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 30dvh;
-  }
-  
-  .sensor-iframe {
-  width: 450px;
-  height: 200px;
-  border: none; /* 이 부분은 frameborder="0"와 같은 효과를 줍니다. */
-  }
+    .test {
+        height: 500px;
+        margin: 15px;
+        padding: 15px;
+        border-radius: 5px;
+        background-color: #22252b;
+    }
   </style>
   

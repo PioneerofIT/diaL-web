@@ -51,42 +51,94 @@
   
   
   <template>
-    <div >
-      <div class="title-container">
-        <img src = "../public/static/Dial-icon.jpg" alt="Icon Description" class="icon">
-        <h1 class="main-title">2023 캡스톤디자인 테스트 영상 </h1>
-      </div>
-      <p class="sub-title">타겟 장소: 한밭대학교 N5 302호</p>
+      <body>
+        <div class="title-container">
+          <table border="0" style="width: 100%; margin: 5px;">
+            <tr>
+              <td rowspan="2">
+                <img src = "../public/static/Dial-icon.jpg" alt="Icon Description" class="icon">
+              </td>
+              <td>
+                <h1 class="main-title">캡스톤디자인 테스트 영상 </h1>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <p class="sub-title">한밭대학교 N5 302호</p>
+              </td>
+            </tr>
+          </table>
+          
+          
+        </div>
+        
 
-      <nav>
-        <router-link to ="/" class="menu-button"> Home</router-link>
-        <router-link to ="/LiveSensorPage" class="menu-button"> 실시간 데이터 </router-link>
-        <router-link to ="/MLPage" class="menu-button"> 실시간 화재 판단 </router-link>
-        <router-link to ="/LiveCCTV" class="menu-button"> 실시간 CCTV </router-link>
-        <router-link to ="/TwinPage" class="menu-button"> 3D 가상 건물 </router-link> 
-      </nav>
-      <router-view></router-view>
-      <div class="weather-info">
-        <p class="weather">지역 : {{ city }}</p>
-        <p>날씨 : {{ weather }}</p>
-        <p>온도 : {{ temperature }}</p>
-        <p>습도 : {{ humidity }}%</p>
-      </div>
-    </div>
-
-    
+        <nav>
+          <router-link to ="/" class="menu-button"> Home</router-link>
+          <router-link to ="/LiveSensorPage" class="menu-button"> 실시간 데이터 </router-link>
+          <router-link to ="/MLPage" class="menu-button"> 실시간 화재 판단 </router-link>
+          <router-link to ="/LiveCCTV" class="menu-button"> 실시간 CCTV </router-link>
+          <router-link to ="/TwinPage" class="menu-button"> 3D 가상 건물 </router-link> 
+        </nav>
+        <router-view></router-view>
+        <div class="weather-info">
+          <table align="center">
+            <tr>
+              <td>
+                <p class="weather" style="font-size: large;">지역 </p>
+              </td>
+              <td>
+                <p class="weather"> {{ city }}</p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p style="font-size: large;">날씨 </p>
+              </td>
+              <td>
+                <p> {{ weather }}</p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p style="font-size: large;">온도 </p>
+              </td>
+              <td>
+                <p> {{ temperature }}°C</p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p style="font-size: large;">습도 </p>
+              </td>
+              <td>
+                <p> {{ humidity }}%</p>
+              </td>
+            </tr>
+        </table>
+        </div>
+      </body>
   </template>
-    
+
   <style scoped>
   @media (max-width: 768px) { /* 768px 이하의 화면 너비에 대한 스타일 적용 */
+  body{
+    margin: 0px;
+    background: #1b1e22;
+    background-clip: border-box;
+    padding-bottom: 10px;
+    border: 0;
+  }
   .menu-button {
     display: block; /* 세로 배치를 위해 block으로 설정 */
     margin: 10px auto; /* 좌우 중앙 정렬과 위아래 간격 추가 */
+    padding: 5px;
     width: 80%; /* 버튼 너비 설정 */
     border-radius: 5px; 
     background-color: #42b983;
     text-decoration-line: none;
     color: aliceblue;
+    font-size: 20px;
   }
   
   nav {
@@ -95,20 +147,19 @@
 }
   .title-container {
     text-align: left;
-    padding-left: 20px; /* 왼쪽 간격 추가 */
     margin-bottom: 20px; /* 제목과 <nav> 사이의 간격 추가 */
     display: flex;
   }
   .icon {
-  width: 50px;  /* 원하는 크기로 설정 */
+  width: 70px;  /* 원하는 크기로 설정 */
   height: 40px; /* 원하는 크기로 설정 */
-  margin-right: 5px; /* 텍스트와의 간격 조정 */
+  float: left;
 }
   
   .main-title {
     color: #42b983; /* 초록색 */
     margin: 0;
-    font-size: 24px;
+    font-size: 18px;
   }
 
   .main-title .icon {
@@ -120,25 +171,26 @@
 
   
   .sub-title {
-    color: #42b983; /* 초록색 */
-    margin-left: 60px;
-    font-size: 16px;
+    color: white; /* 초록색 */
+    margin: 0px;
+    font-size: 15px;
   }
 
   /* 감싸는 div 스타일링 */
 .weather-info {
-    background-color: #f5f5f5; /* 배경색 설정 */
+    background-color: #22252b; /* 배경색 설정 */
     padding: 20px; /* 내부 여백 설정 */
     border-radius: 10px; /* 모서리 둥글게 */
-    width: 250px; /* 너비 설정 */
-    margin: 20px auto; /* 중앙 정렬 */
+    margin: 15px auto; /* 중앙 정렬 */
+    margin: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
     text-align: center; /* 텍스트 중앙 정렬 */
+    color: white;
 }
 
 /* 각 p 태그 스타일링 */
 .weather-info p {
-    font-size: 18px; /* 글자 크기 */
+    font-size: 15px; /* 글자 크기 */
     margin-bottom: 15px; /* 각 p 태그 사이의 간격 설정 */
     font-weight: bold; /* 볼드체 */
 }
