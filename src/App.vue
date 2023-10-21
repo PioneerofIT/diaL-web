@@ -14,10 +14,38 @@
         city: '',
         temperature: '',
         humidity: '',
-        weather:''
+        weather:'',
+        final_prediction: '',
+        final_prediction_str: '',
+        apiData:null
       };
     },
     methods: {
+    async fetchAssetData() {
+      this.loading = true;
+      this.error = null;
+      try {
+        const API_URL = `https://p3j7hfgon0.execute-api.us-west-2.amazonaws.com/`;
+        const response = await axios.get(API_URL);
+        this.apiData = response.data;
+        this.updateTmpData();  // apiData가 업데이트되면 updateTmpData 호출
+      } catch (error) {
+        console.error('Error fetching asset data:', error);
+        this.error = error.message || 'Error fetching data';
+      } finally {
+        this.loading = false;
+      }
+    },
+    updateTmpData() {
+      this.final_prediction = this.apiData.doubleValues[4];
+
+      if(this.final_prediction == -1) {
+        this.final_prediction_str = "화재"
+      }
+      else {
+        this.final_prediction_str = "정상 상태"
+      }
+    },
     onMenuClick(menuItem) {
       if(menuItem == 'Menu 1') {
         this.$router.push('/LiveSensorPage');
@@ -30,7 +58,6 @@
       const BASE_URL = 'https://api.openweathermap.org/data/2.5/weather?lat=36.34&lon=127.28&appid=66642b3fa015dc2047aff31ed3ff29e4&units=metric';
       axios.get(BASE_URL)
       .then((result) => {
-        console.log(result.data);
         this.city = result.data.name;
         this.temperature = result.data.main.temp;
         this.humidity = result.data.main.humidity;
@@ -43,6 +70,7 @@
     },
   },
   created() { 
+      this.fetchAssetData();
       this.searchWeather();
       document.title = "diaL 화재 관리 관리자"
     }      
@@ -65,14 +93,14 @@
             <tr>
               <td colspan="2">
                 <p class="sub-title">한밭대학교 N5 302호</p>
+
               </td>
             </tr>
-          </table>
-          
-          
+          </table>           
         </div>
-        
-
+        <div>
+          <h1 class="final-prediction">현재 최종 감지 : {{ final_prediction_str }}</h1>
+        </div>
         <nav>
           <router-link to ="/" class="menu-button"> Home</router-link>
           <router-link to ="/LiveSensorPage" class="menu-button"> 실시간 데이터 </router-link>
@@ -201,4 +229,7 @@ p.weather {
     font-size: large;
 }
   
+.final-prediction {
+  color: aliceblue;
+}
   </style>
