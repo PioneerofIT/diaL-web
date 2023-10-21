@@ -59,7 +59,7 @@
                 <img src = "../public/static/Dial-icon.jpg" alt="Icon Description" class="icon">
               </td>
               <td>
-                <h1 class="main-title">캡스톤디자인 테스트 영상 </h1>
+                <h1 class="main-title">화재 관리자 페이지 </h1>
               </td>
             </tr>
             <tr>
