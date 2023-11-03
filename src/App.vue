@@ -41,6 +41,7 @@
 
       if(this.final_prediction == -1) {
         this.final_prediction_str = "화재"
+        document.getElementById("final").classList.add("blink");
       }
       else {
         this.final_prediction_str = "정상 상태"
@@ -98,8 +99,8 @@
             </tr>
           </table>           
         </div>
-        <div>
-          <h1 class="final-prediction">현재 최종 감지 : {{ final_prediction_str }}</h1>
+        <div >
+          <h1 id="final" class="final-prediction">최종 감지 : {{ final_prediction_str }}</h1>
         </div>
         <nav>
           <router-link to ="/" class="menu-button"> Home</router-link>
@@ -146,6 +147,8 @@
         </table>
         </div>
       </body>
+      
+
   </template>
 
   <style scoped>
@@ -231,5 +234,28 @@ p.weather {
   
 .final-prediction {
   color: aliceblue;
+  margin: 50px;
+}
+
+.blink {
+  color:red;
+  -webkit-animation: blink 0.5s ease-in-out infinite alternate;
+  -moz-animation: blink 0.5s ease-in-out infinite alternate;
+  animation: blink 0.5s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes blink{
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+@-moz-keyframes blink{
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+@keyframes blink{
+  0% {opacity: 0;}
+  100% {opacity: 1;}
 }
   </style>
