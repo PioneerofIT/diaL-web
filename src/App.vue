@@ -189,13 +189,10 @@ import { RouterLink } from 'vue-router';
 
         </table>
         </div>
-      </body>
-      
-
+      </body> 
   </template>
 
-  <style>
-
+  <style scoped>
 
   @media (max-width: 768px) { /* 768px 이하의 화면 너비에 대한 스타일 적용 */
   body{
@@ -208,7 +205,6 @@ import { RouterLink } from 'vue-router';
   
  .menu-button {
     display: block;
-    text-decoration-color: aliceblue;
     width: 100%;
     background-color: #454648; 
     text-align: left;
@@ -318,16 +314,18 @@ p.weather {
 
 
  .navbar-toggler {
-  background-color: rgba(195, 189, 189, 0.13); /* 흰색 바탕 */
+  background-color: rgba(195, 189, 189, 0.13); 
   
 }
 
 
- .navbar-toggler .navbar-toggler-icon {
+::v-deep .navbar-toggler .navbar-toggler-icon {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='black' stroke-width='5' stroke-linecap='round' stroke-miterlimit='10' d='M4 15h22M4 30h22M4 45h22'/%3E%3C/svg%3E");
   height: 60px;
   background-size: contain;
   background-color: darkgrey;
+  border-radius: 30px;
+  width: 20px;
 }
 
 
@@ -344,7 +342,5 @@ p.weather {
 .nav-link {
   color: white;
 }
-
-
 
   </style>
