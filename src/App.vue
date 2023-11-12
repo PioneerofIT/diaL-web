@@ -1,25 +1,29 @@
   <!-- 모든 컴포넌트의 집합  -->
   <script>
   import axios from 'axios';
-import { RouterLink } from 'vue-router';
+  import { RouterLink } from 'vue-router';
+  import LiveSensorPageVue from './component/LiveSensorPage.vue';
+
+
 
   export default {
     data() {
         return {
-            expanded: false,
-            data: null,
-            loading: false,
-            error: null,
-            assetId: '83ecd1bb-0edb-4b38-9d45-667ac1a500e2',
-            view: true,
-            city: '',
-            temperature: '',
-            humidity: '',
-            weather: '',
-            final_prediction: '',
-            final_prediction_str: '',
-            apiData: null,
-            isSidebarOpen: false //사이드바 상태
+          src: 'http://52.36.71.154:3000/d-solo/ENk1jS84k/test?orgId=1&panelId=', 
+          expanded: false,
+          data: null,
+          loading: false,
+          error: null,
+          assetId: '83ecd1bb-0edb-4b38-9d45-667ac1a500e2',
+          view: true,
+          city: '',
+          temperature: '',
+          humidity: '',
+          weather: '',
+          final_prediction: '',
+          final_prediction_str: '',
+          apiData: null,
+          isSidebarOpen: false 
         };
     },
     methods: {
@@ -27,7 +31,10 @@ import { RouterLink } from 'vue-router';
             this.isSidebarOpen = !this.isSidebarOpen;
         },
         navigateHome() {
-          this.$router.push('/');
+            const currentPath = this.$route.path;
+            if (currentPath !== '/LiveSensorPage') {
+              this.$router.push('/LiveSensorPage');
+            }
         },
         async fetchAssetData() {
             this.loading = true;
@@ -47,15 +54,30 @@ import { RouterLink } from 'vue-router';
             }
         },
         updateTmpData() {
-            this.final_prediction = this.apiData.doubleValues[4];
-            if (this.final_prediction == -1) {
-                this.final_prediction_str = "화재";
-                document.getElementById("final").classList.add("blink");
-            }
-            else {
-                this.final_prediction_str = "정상 상태";
-            }
+          if(this.currentId == 4) {
+            this.tmp = "현재 온도 :" + this.apiData.doubleValues[0] + "°C";
+          } else if (this.currentId == 6) {
+            this.tmp = "현재 습도 :" + this.apiData.doubleValues[2] + "%";
+          } else if (this.currentId == 8) {
+            this.tmp = "현재 CO농도 :" + this.apiData.doubleValues[1] + "ppm";
+          }
+          this.final_prediction = this.apiData.doubleValues[4];
+          if (this.final_prediction == -1) {
+              this.final_prediction_str = "화재";
+              document.getElementById("final").classList.add("blink");
+          }
+          else {
+              this.final_prediction_str = "정상";
+          }
         },
+        chpannel(id) {
+          this.currentId = id;  // 현재 선택된 ID를 저장
+          this.panelSrc = this.src + id;
+          this.fetchAssetData();
+          this.intervalForChpannel = setInterval(() => {
+            this.fetchAssetData();
+      }, 3000);
+    },
         onMenuClick(menuItem) {
             if (menuItem == 'Menu 1') {
                 this.$router.push('/LiveSensorPage');
@@ -84,129 +106,90 @@ import { RouterLink } from 'vue-router';
         this.searchWeather();
         document.title = "diaL 화재 관리 관리자";
     },
-    components: { RouterLink }
+    components: { RouterLink, LiveSensorPageVue }
 }
   </script>
-  
-  
+
   <template>
       <body>
         <div class="title-container">
-          <table border="0" style="width: 100%; margin: 5px;">
+          <table border="0" style="width: 100%; margin-right: 5px; margin-left: 5px; margin-bottom: 0px;">
             <tr>
-              <td rowspan="2">
-                <img src = "../public/static/Dial-icon.jpg" alt="Icon Description" class="icon"  @click="navigateHome">
+              <td class="sidebar-container">
+                <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+                <b-sidebar id="nav-collapse" title="MENU" shadow :visible.sync="isSidebarOpen" width="60%" style="padding: 10PX; font-weight: 300;">
+                  <div class="b-nav">
+                    <router-link class="menu-button" to="/LiveSensorPage" style="color: #181a18; font-weight: bold; text-align: center;">실시간 측정 데이터</router-link>
+                    <router-link class="menu-button" to="/MLPage"  style="color: #181a18; font-weight: bold; text-align: center;">실시간 센서 데이터</router-link>
+                    <router-link class="menu-button" to="/LiveCCTV"  style="color: #181a18; font-weight: bold; text-align: center;">실시간 카메라</router-link>
+                    <router-link class="menu-button" to="/TwinPage"  style="color: #181a18; font-weight: bold; text-align: center;">디지털 트윈</router-link>
+                  </div>
+                </b-sidebar>
+                
+                <div style="margin-left: 5% ;">
+                  <img src="../public/static/Dial-icon.jpg" alt="Icon Description" class="icon" @click="navigateHome">
+                </div>
               </td>
-              <td>
-                <h1 class="main-title">화재 관리자 페이지 </h1>
+
+              <td style="width: 50%; text-align: right;">
+                <h1 class="main-title" style="font-size: 125%; padding-right: 3%;" >화재 관리자 페이지</h1>
+                <h2 class="sub-title" style="font-size: 80%; padding-right: 3%;">한밭대학교 자동화관 302호</h2>
               </td>
+              
             </tr>
-            <tr>
-              <td colspan="2">
-                <p class="sub-title">한밭대학교 N5 302호</p>
-              </td>
-            </tr>
-          </table>           
-        </div>
-       
-          <div class ="sidebar-container">
-          <div>
-            <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>   
-            <b-sidebar class="bar" id="nav-collapse" title="DIAL 관리자 메뉴" shadow :visible.sync="isSidebarOpen">
-              <b-nav vertical>
-                <b-nav-item class="menu-button" to="/LiveSensorPage">실시간 데이터</b-nav-item>
-                <b-nav-item class="menu-button" to="/MLPage">실시간 화재 판단</b-nav-item>
-                <b-nav-item class="menu-button" to="/LiveCCTV">실시간 CCTV</b-nav-item>
-                <b-nav-item class="menu-button" to="/TwinPage">3D 가상 건물</b-nav-item>
-      
-              </b-nav>
-            </b-sidebar>
-          </div>
-          <h1 id="final" class="final-prediction">최종 감지 : {{ final_prediction_str }}</h1>
+          </table>
         </div>
 
-          
-       
-       
-        
-        <!-- 메인 화면-->
+        <table style="width: 100%; height: 100%; margin-top: -10px;">
+          <tr>
+            <td style="width: 50%; height: 50%; text-align: center; vertical-align: middle;">
+              <div class="weather-info"  style="width: 80%; height: 80%; margin-left: auto;margin">
+                <div style="margin: 10% 10% 10% 10%;">
+                  <h1 style="display: flex; align-items: center;">
+                    <img src="../public/static/gps-icon.png" width="30pt" height="30pt" style="padding-right: 0px;">{{city}}
+                  </h1>
+                  <h2 style="font-size: 120%; font-style: italic;">{{weather}}</h2>
+                  <h2 style="font-size: 120%;">{{temperature}} °C</h2>
+                  <h2 style="font-size: 120%;">{{humidity}} %</h2>
+                </div>
+                
+              </div>
+            </td>
+
+            <td style="width: 50%; height: 50%; text-align: center; vertical-align: middle;">
+              <div class="weather-info"  style="width: 80%; height: 80%; background-color: mediumseagreen; ">
+                <div style="padding: 0pt; color: #ffffff;">현재 상태</div>
+                <h2 style="font-size: 250%; font-weight: bold; color: #ffffff;">{{final_prediction_str}}</h2>
+              </div>
+            </td>
+          </tr>
+        </table>
+
         <div>
           <router-view></router-view>
         </div>
-       
-          <!--
-          <div>
-            <nav v-show="isSidebarOpen">
-              <router-link to="/" class="menu-button">Home</router-link>
-              <router-link to="/LiveSensorPage" class="menu-button">실시간 데이터</router-link>
-              <router-link to="/MLPage" class="menu-button">실시간 화재 판단</router-link>
-              <router-link to="/LiveCCTV" class="menu-button">실시간 CCTV</router-link>
-              <router-link to="/TwinPage" class="menu-button">3D 가상 건물</router-link> 
-            </nav>
-            <router-view></router-view>
-         </div>
-        -->
-    
 
-       
-        <div class="weather-info">
-          <table align="center">
-            <tr>
-              <td>
-                <p class="weather" style="font-size: large;">지역 </p>
-              </td>
-              <td>
-                <p class="weather"> {{ city }}</p>
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                <p style="font-size: large;">날씨 </p>
-              </td>
-              <td>
-                <p> {{ weather }}</p>
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                <p style="font-size: large;">온도 </p>
-              </td>
-              <td>
-                <p> {{ temperature }}°C</p>
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                <p style="font-size: large;">습도 </p>
-              </td>
-              <td>
-                <p> {{ humidity }}%</p>
-              </td>
-            </tr>
-
-        </table>
-        </div>
-      </body> 
+      </body>
   </template>
 
   <style scoped>
-
-  @media (max-width: 768px) { /* 768px 이하의 화면 너비에 대한 스타일 적용 */
-  body{
-    margin: 0px;
-    background: #1b1e22;
-    background-clip: border-box;
-    padding-bottom: 10px;
-    border: 0;
+  html{
+    background-color: #efefef;
   }
-  
+  body{
+    min-height: 65vh;
+    background-color: #efefef;
+    margin: 0 auto;
+  }
+
+.sidebar-container.show {
+  background-color: transparent /* 뒷배경색을 원하는 색상으로 설정 */
+}
+
  .menu-button {
     display: block;
     width: 100%;
-    background-color: #454648; 
+    background-color: #454648;
     text-align: left;
     padding: 0.5rem 1rem;
     border: none;
@@ -215,81 +198,144 @@ import { RouterLink } from 'vue-router';
   }
 
   .defalut {
-    background-color: #454648; 
+    background-color: #454648;
   }
-  
 
-  
+  .divider {
+    border-top: 1px solid #ffffff48;
+    margin: 5%;
+    width: 80%; 
+  }
+
   nav {
     text-align: center; /* 가운데 배치 */
   }
+
+  .hr2 {
+    color: #181B1F;
+    margin-top: 0%;
+    margin-bottom: 5%;
+  }
+
+  table {
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+  }
+
+  table2 {
+    border-collapse: collapse ;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: 100%;
+  }
+
+  table3 {
+    border-collapse: collapse ;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: 100%;
+
 }
+
   .title-container {
-    text-align: left;
-    margin-bottom: 20px; /* 제목과 <nav> 사이의 간격 추가 */
+    margin-bottom: 0%;
     display: flex;
   }
   .icon {
-  width: 70px;  /* 원하는 크기로 설정 */
-  height: 40px; /* 원하는 크기로 설정 */
-  float: left;
+  width: 60px;
+  height: 20px;
+  margin-right: 0px;
+  float: right;
 }
-  
+
+h1 {
+    color: #181B1F;
+    font-size: 150%;
+    font-weight: bold; 
+    text-align: center; 
+    margin: 5pt;
+    transition: all 0.3s ease; 
+}
+
+h2 {
+    color: #181B1F; 
+    font-size: 1em;
+    text-align: center;
+    margin: 5pt;
+    transition: all 0.3s ease;
+}
+
+h4 {
+    display: block;
+    margin-block-start: 0px;
+    margin-block-end: 0px;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    text-align: left;
+}
+
+h5 {
+    display: block;
+    font-size: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    text-align: left;
+}
+
   .main-title {
-    color: #42b983; /* 초록색 */
+    color: #181B1F;
     margin: 0;
-    font-size: 18px;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: right;
   }
 
-  .main-title .icon {
-    width: 24px;
-    height: 24px;
-    margin-right: 8px; 
-    vertical-align: middle; 
-}
-
-  
   .sub-title {
-    color: white; /* 초록색 */
+    color: #181B1F;
     margin: 0px;
-    font-size: 15px;
+    font-size: 17px;
+    text-align: right;
   }
 
-  /* 감싸는 div 스타일링 */
-.weather-info {
-    background-color: #22252b; /* 배경색 설정 */
-    padding: 20px; /* 내부 여백 설정 */
-    border-radius: 10px; /* 모서리 둥글게 */
-    margin: 15px auto; /* 중앙 정렬 */
-    margin: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
-    text-align: center; /* 텍스트 중앙 정렬 */
-    color: white;
+  .weather-info {
+    position: relative;
+    overflow: hidden;
+    padding-top: 100%;
+    margin: 5% 5% 5% 5%;
+    background-color: #F8F8F8;
+    border-radius: 30px;
+    box-shadow: -6px -6px 5px rgba(228, 226, 226, 0.8), 6px 6px 5px rgba(0,0,0,0.2);
+
+    text-align: center; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 180px;
+    padding: 5%; 
 }
 
-/* 각 p 태그 스타일링 */
+
+
 .weather-info p {
-    font-size: 15px; /* 글자 크기 */
-    margin-bottom: 15px; /* 각 p 태그 사이의 간격 설정 */
-    font-weight: bold; /* 볼드체 */
+    font-size: 15px;
+    margin-bottom: 15px; 
+    font-weight: bold; 
 }
 
-/* 특정 텍스트에만 색상을 적용하고 싶다면, 클래스를 추가하여 스타일링 */
-p.weather {
-    color: #3498db; /* 특정 색상 */
-    font-size: large;
-}
-  
 .final-prediction {
-  color: #ffffff; /* 글자 색상을 흰색으로 설정 */
-  font-size: 2rem; /* 글자 크기를 2rem으로 설정 */
-  font-weight: bold; /* 글자를 굵게 설정 */
-  text-align: center; /* 텍스트를 중앙 정렬 */
+  color: #ffffff; 
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center; 
   margin: 40px;
-  transition: all 0.3s ease; /* 부드러운 전환 효과 */
+  transition: all 0.3s ease; 
 }
-
-
 .blink {
   color:red;
   -webkit-animation: blink 0.5s ease-in-out infinite alternate;
@@ -313,34 +359,51 @@ p.weather {
 }
 
 
- .navbar-toggler {
-  background-color: rgba(195, 189, 189, 0.13); 
-  
-}
-
-
+/* navbar-toggler 관련 스타일 */
 ::v-deep .navbar-toggler .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='black' stroke-width='5' stroke-linecap='round' stroke-miterlimit='10' d='M4 15h22M4 30h22M4 45h22'/%3E%3C/svg%3E");
-  height: 60px;
-  background-size: contain;
-  background-color: darkgrey;
-  border-radius: 30px;
-  width: 20px;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23181B1F' stroke-width='5' stroke-linecap='round' stroke-miterlimit='10' d='M4 15h8M14 15h2M18 15h8M4 30h8M14 30h2M18 30h8M4 45h8M14 45h2M18 45h8'/%3E%3C/svg%3E");
+  height: 60px; /* 토글 아이콘의 높이 설정 */
+  border-radius: 30px; /* 토글 아이콘의 모서리를 둥글게 설정 */
+  width: 22px; /* 토글 아이콘의 너비 설정 */
+  background-color: transparent;
 }
 
+/* 펼쳐진 상태의 토글 아이콘 스타일 */
+.navbar-toggler:not(.collapsed) {
+  background-color: transparent;
+}
 
-/* 활성화됐을 때의 스타일 */
- .navbar-toggler:not(.collapsed) {
-  background-color: rgb(207, 195, 195); /* 활성화됐을 때도 흰색 바탕 유지 */
+/* 사이드바가 열렸을 때의 배경색 스타일 */
+.sidebar-container.show {
+  background-color: transparent; /* 사이드바가 열렸을 때의 배경 색상을 설정 */
 }
 
 .sidebar-container {
   display: flex; /* flexbox를 활성화합니다 */
   align-items: center; /* 세로축을 중심으로 가운데 정렬합니다 */
+  background-color: transparent;
 }
 
-.nav-link {
-  color: white;
+.b-nav {
+  background-color:transparent;
+  padding-right: 10px;
+  padding-left: 10px;
+  margin: 10px 10px 10px 10px;
+
 }
 
-  </style>
+/* menu-button 클래스에 대한 스타일 수정 */
+.menu-button {
+  margin-bottom: 5%;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  box-sizing: border-box !important;
+  text-decoration: none;
+  border-radius: 20px;
+  font-size: 18px; /* 메뉴 버튼의 글자 크기를 설정 */
+  background-color: #F8F8F8; /* 메뉴 버튼의 배경 색상을 설정 */
+  box-shadow: -6px -6px 5px rgba(228, 226, 226, 0.8), 6px 6px 5px rgba(0,0,0,0.2);
+}
+</style>
