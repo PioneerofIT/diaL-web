@@ -32,8 +32,8 @@
         },
         navigateHome() {
             const currentPath = this.$route.path;
-            if (currentPath !== '/LiveSensorPage') {
-              this.$router.push('/LiveSensorPage');
+            if (currentPath !== '/') {
+              this.$router.push('/');
             }
         },
         async fetchAssetData() {
