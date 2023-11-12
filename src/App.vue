@@ -177,9 +177,9 @@
     background-color: #efefef;
   }
   body{
-    min-height: 65vh;
+    min-height: 100vh;
     background-color: #efefef;
-    margin: 0 auto;
+    margin: 0;
   }
 
 .sidebar-container.show {
