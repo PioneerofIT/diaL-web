@@ -61,10 +61,12 @@
           } else if (this.currentId == 8) {
             this.tmp = "현재 CO농도 :" + this.apiData.doubleValues[1] + "ppm";
           }
-          this.final_prediction = this.apiData.doubleValues[4]
+          this.final_prediction = this.apiData.doubleValues[4];
           if (this.final_prediction == -1) {
               this.final_prediction_str = "화재";
               document.getElementById("final").classList.add("blink");
+              document.getElementById("test").style.backgroundColor = "red";
+
           }
           else if(this.final_prediction == 1) {
               this.final_prediction_str = "정상";
@@ -165,7 +167,7 @@
             </td>
 
             <td id ="final" style="width: 50%; height: 50%; text-align: center; vertical-align: middle;">
-              <div class="weather-info"  style="width: 80%; height: 80%; background-color: mediumseagreen; ">
+              <div id="test" class="weather-info"  style="width: 80%; height: 80%; background-color: mediumseagreen; ">
                 <div style="padding: 0pt; color: #ffffff;">현재 상태</div>
                 <h2 style="font-size: 250%; font-weight: bold; color: #ffffff;">{{final_prediction_str}}</h2> 
               </div>
