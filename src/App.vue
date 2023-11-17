@@ -61,7 +61,7 @@
           } else if (this.currentId == 8) {
             this.tmp = "현재 CO농도 :" + this.apiData.doubleValues[1] + "ppm";
           }
-          this.final_prediction = this.apiData.doubleValues[4];
+          this.final_prediction = -1
           if (this.final_prediction == -1) {
               this.final_prediction_str = "화재";
               document.getElementById("final").classList.add("blink");
