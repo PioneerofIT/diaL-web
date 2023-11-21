@@ -4,7 +4,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      src: 'http://52.36.71.154:3000/d-solo/ENk1jS84k/test?orgId=1&panelId=', 
+      src: 'http://52.36.71.154:3000/d-solo/ENk1jS84k/test?orgId=1&refresh=5m&panelId=', 
       apiData: null,
       loading: false,
       error: null,
@@ -73,10 +73,11 @@ export default {
         <div style="text-align: right; width: 100%;">
           <nav class="button-container">
           <button class="button" @click="chpannel(4)"> 온도 </button>
-          <button class="button" @click="chpannel(6)"> 습도 </button>
+          <button class="button" @click="chpannel(13)"> 습도 </button>
           <button class="button" @click="chpannel(8)"> CO </button>
           </nav>
         </div>
+        
         <iframe :src="panelSrc"  frameborder="0" width="100%" height="200px"></iframe>
         </div>
       </div>
