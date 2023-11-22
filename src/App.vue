@@ -122,7 +122,6 @@
 
   <template>
       <body>
-        <iframe src="http://52.36.71.154:3000/d-solo/ENk1jS84k/test?orgId=1&refresh=30m&panelId=13" width="450" height="200" frameborder="0"></iframe>
         <div class="title-container">
           <table border="0" style="width: 100%; margin-right: 5px; margin-left: 5px; margin-bottom: 0px;">
             <tr>
