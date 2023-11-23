@@ -73,7 +73,7 @@ export default {
         <div style="text-align: right; width: 100%;">
           <nav class="button-container">
           <button class="button" @click="chpannel(4)"> 온도 </button>
-          <button class="button" @click="chpannel(13)"> 습도 </button>
+          <button class="button" @click="chpannel(6)"> 습도 </button>
           <button class="button" @click="chpannel(8)"> CO </button>
           </nav>
         </div>
