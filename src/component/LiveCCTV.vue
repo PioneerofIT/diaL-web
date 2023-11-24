@@ -1,6 +1,6 @@
 <template>
         <div class="container" style= "text-align: center; width: auto; height: auto;">
-            <iframe src="http://52.36.71.154:3000/d-solo/ENk1jS84k/test?orgId=1&panelId=10" width="100%" height="400px" frameborder="0"></iframe>
+            <iframe src="http://35.81.163.123:3000/d-solo/ENk1jS84k/test?orgId=1&panelId=10" width="100%" height="400px" frameborder="0"></iframe>
         </div>
   </template>
   

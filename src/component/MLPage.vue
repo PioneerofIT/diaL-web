@@ -2,16 +2,16 @@
     <body>
         <div class="container" style= "text-align: left; width: auto; height: auto;">
             <div>
-                <iframe src="http://52.36.71.154:3000/d-solo/ENk1jS84k/test?orgId=1&refresh=5s&from=1694573117845&to=1694594717845&panelId=12" width="50%" height="50%" frameborder="0"></iframe>
-                <iframe src="http://52.36.71.154:3000/d-solo/ENk1jS84k/test?orgId=1&refresh=5s&panelId=13" width="50%" height="50%" frameborder="0"></iframe>
+                <iframe src="http://35.81.163.123:3000/d-solo/ENk1jS84k/test?orgId=1&refresh=5s&from=1694573117845&to=1694594717845&panelId=12" width="50%" height="50%" frameborder="0"></iframe>
+                <iframe src="http://35.81.163.123:3000/d-solo/ENk1jS84k/test?orgId=1&refresh=5s&panelId=13" width="50%" height="50%" frameborder="0"></iframe>
             </div>
             <div>      
-                <iframe src="http://52.36.71.154:3000/d-solo/ENk1jS84k/test?orgId=1&refresh=5s&panelId=17" width="50%" height="50%" frameborder="0"></iframe>
-                <iframe src="http://52.36.71.154:3000/d-solo/ENk1jS84k/test?orgId=1&refresh=5s&panelId=14" width="50%" height="150" frameborder="0"></iframe>
+                <iframe src="http://35.81.163.123:3000/d-solo/ENk1jS84k/test?orgId=1&refresh=5s&panelId=17" width="50%" height="50%" frameborder="0"></iframe>
+                <iframe src="http://35.81.163.123:3000/d-solo/ENk1jS84k/test?orgId=1&refresh=5s&panelId=14" width="50%" height="150" frameborder="0"></iframe>
             </div>
             <div>
-                <iframe src="http://52.36.71.154:3000/d-solo/ENk1jS84k/test?orgId=1&refresh=5s&panelId=16" width="50%" height="50%" frameborder="0"></iframe>
-                <iframe src="http://52.36.71.154:3000/d-solo/ENk1jS84k/test?orgId=1&refresh=5s&panelId=15" width="50%" height="50%" frameborder="0"></iframe>  
+                <iframe src="http://35.81.163.123:3000/d-solo/ENk1jS84k/test?orgId=1&refresh=5s&panelId=16" width="50%" height="50%" frameborder="0"></iframe>
+                <iframe src="http://35.81.163.123:3000/d-solo/ENk1jS84k/test?orgId=1&refresh=5s&panelId=15" width="50%" height="50%" frameborder="0"></iframe>  
             </div>
         </div>
     </body>

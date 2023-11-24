@@ -4,7 +4,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      src: 'http://52.36.71.154:3000/d-solo/ENk1jS84k/test?orgId=1&panelId=',
+      src: 'http://35.81.163.123:3000/d-solo/ENk1jS84k/test?orgId=1&panelId=',
       apiData: null,
       loading: false,
       error: null,
