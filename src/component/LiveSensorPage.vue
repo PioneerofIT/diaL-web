@@ -4,7 +4,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      src: 'http://52.36.71.154:3000/d-solo/ENk1jS84k/test?orgId=1&refresh=5m&panelId=', 
+      src: 'http://52.36.71.154:3000/d-solo/ENk1jS84k/test?orgId=1&panelId=',
       apiData: null,
       loading: false,
       error: null,
@@ -53,8 +53,8 @@ export default {
   },
   mounted() {
     this.chpannel(4)
-    this.fetchAssetData(); 
-    this.interval = setInterval(this.fetchAssetData, 3000); 
+    this.fetchAssetData();
+    this.interval = setInterval(this.fetchAssetData, 3000);
   },
 
   beforeDestroy() {
@@ -69,16 +69,20 @@ export default {
       <div style="width: 100%; padding: 15px; padding-left: 15px; position: relative; margin:0 auto;">
         <h5 style="text-align: left; padding-top: 5px; margin-bottom: -5px;">현재</h5>
         <div class = "tmp" style="padding-bottom: 10px; font-weight: 350;"> {{ tmp }}</div>
-
-        <div style="text-align: right; width: 100%;">
-          <nav class="button-container">
-          <button class="button" @click="chpannel(4)"> 온도 </button>
-          <button class="button" @click="chpannel(6)"> 습도 </button>
-          <button class="button" @click="chpannel(8)"> CO </button>
-          </nav>
+        <div class="letter-container">
+          <div style="text-align: right; width: 100%;">
+            <nav class="button-container">
+            <button class="button" @click="chpannel(4)"> 온도 </button>
+            <button class="button" @click="chpannel(6)"> 습도 </button>
+            <button class="button" @click="chpannel(8)"> CO </button>
+            </nav>
+          </div>
         </div>
-        
-        <iframe :src="panelSrc"  frameborder="0" width="100%" height="200px"></iframe>
+
+        <div class="graph-container">
+          <iframe :src="panelSrc"  frameborder="0" width="100%" height="200px"></iframe>
+        </div>
+
         </div>
       </div>
   </body>
@@ -91,18 +95,19 @@ export default {
 }
 .button {
   padding: auto;
-  background-color: #181B1F;   /* 배경색 */
-  color: #F8F8F8;             /* 텍스트 색상 */
+  background-color: transparent;   /* 배경색 */
+  color: #181B1F;             /* 텍스트 색상 */
   text-align: center;       /* 텍스트를 버튼 중앙에 정렬 */
   flex: 1;                  /* 가용 공간에 따라 요소의 크기 조절 */
-  font-size: 17px;
+  font-size: 18px;
+  font-weight: 600;
   border: #181B1F;
 }
 .tmp {
-  color: #181B1F; 
+  color: #181B1F;
   font-size: 250%;
-  text-transform: uppercase;  
-  font-weight: lighter;  
+  text-transform: uppercase;
+  font-weight: lighter;
 }
 
 .small-letter {
@@ -118,17 +123,45 @@ export default {
     justify-content: center; /* 수직 가운데 정렬을 위한 justify-content 추가 */
   }
 
+  .letter-container {
+    background-color: #F8F8F8; /* 배경색 설정 */
+    border-radius: 10px;
+    box-shadow: -6px -6px 5px rgba(228, 226, 226, 0.35), -6px 6px 5px rgba(228,226,226,0.35), 6px -6px 5px rgba(228,226,226,0.35), 6px 6px 5px rgba(228,226,226,0.35);
+    width: 100%;
+    height: 100%;
+    margin-top: -5px;
+    margin-bottom: 15px; /* 수평 가운데 정렬을 위한 margin 추가 */
+    padding: 1%;
+    border-color: #181B1F;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 수직 가운데 정렬을 위한 justify-content 추가 */
+  }
+
+  .graph-container {
+    background-color: #181B1F; /* 배경색 설정 */
+    border-radius: 15px;
+    height: 100%;
+    margin-top: -5px;
+    margin-bottom: 15px; /* 수평 가운데 정렬을 위한 margin 추가 */
+    padding: 5%;
+    border-color: #181B1F;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 수직 가운데 정렬을 위한 justify-content 추가 */
+  }
+
 h1 {
-    color: #262F5A; /* 글자 색상을 흰색으로 설정 */
+    color: #262F5A;
     font-size: 150%;
-    font-weight: bold; /* 글자를 굵게 설정 */
-    text-align: center; /* 텍스트를 중앙 정렬 */
+    font-weight: bold;
+    text-align: center;
     margin: 5pt;
-    transition: all 0.3s ease; /* 부드러운 전환 효과 */
+    transition: all 0.3s ease;
 }
 
 h2 {
-    color: #262F5A; /* 글자 색상을 흰색으로 설정 */
+    color: #262F5A;
     font-size: 1em;
     text-align: center;
     margin: 5pt;

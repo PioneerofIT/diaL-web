@@ -4,12 +4,10 @@
   import { RouterLink } from 'vue-router';
   import LiveSensorPageVue from './component/LiveSensorPage.vue';
 
-
-
   export default {
     data() {
         return {
-          src: 'http://52.36.71.154:3000/d-solo/ENk1jS84k/test?orgId=1&panelId=', 
+          src: 'http://52.36.71.154:3000/d-solo/ENk1jS84k/test?orgId=1&panelId=',
           expanded: false,
           data: null,
           loading: false,
@@ -23,7 +21,7 @@
           final_prediction: '',
           final_prediction_str: '',
           apiData: null,
-          isSidebarOpen: false 
+          isSidebarOpen: false
         };
     },
     methods: {
@@ -32,8 +30,8 @@
         },
         navigateHome() {
             const currentPath = this.$route.path;
-            if (currentPath !== '/') {
-              this.$router.push('/');
+            if (currentPath !== '/LiveSensorPage') {
+              this.$router.push('/LiveSensorPage');
             }
         },
         async fetchAssetData() {
@@ -65,19 +63,9 @@
           if (this.final_prediction == -1) {
               this.final_prediction_str = "화재";
               document.getElementById("final").classList.add("blink");
-              document.getElementById("test").style.backgroundColor = "red";
-
           }
-          else if(this.final_prediction == 1) {
+          else {
               this.final_prediction_str = "정상";
-          }
-          else if(this.final_prediction == 2) {
-            this.final_prediction_str = "센서 유지보수 필요";
-
-          }
-          else if(this.final_prediction == -2) {
-            this.final_prediction_str = "센서 유지보수 필요";
-            
           }
         },
         chpannel(id) {
@@ -114,7 +102,8 @@
     created() {
         this.fetchAssetData();
         this.searchWeather();
-        document.title = "diaL 화재 관리 관리자";
+        this.interval = setInterval(this.fetchAssetData, 1000);
+        document.title = "diaL 화재 관리자 페이지";
     },
     components: { RouterLink, LiveSensorPageVue }
 }
@@ -127,57 +116,64 @@
             <tr>
               <td class="sidebar-container">
                 <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-                <b-sidebar id="nav-collapse" title="MENU" shadow :visible.sync="isSidebarOpen" width="60%" style="padding: 10PX; font-weight: 300;">
+                <b-sidebar id="nav-collapse" title="MENU" shadow :visible.sync="isSidebarOpen" width="60%" style="padding: 10PX; font-weight: 500;">
                   <div class="b-nav">
                     <router-link class="menu-button" to="/LiveSensorPage" style="color: #181a18; font-weight: bold; text-align: center;">실시간 측정 데이터</router-link>
                     <router-link class="menu-button" to="/MLPage"  style="color: #181a18; font-weight: bold; text-align: center;">실시간 센서 데이터</router-link>
-                    <router-link class="menu-button" to="/LiveCCTV"  style="color: #181a18; font-weight: bold; text-align: center;">실시간 카메라</router-link>
+                    <router-link class="menu-button" to="/LiveCCTV"  style="color: #181a18; font-weight: bold; text-align: center;">실시간 내부 카메라</router-link>
                     <router-link class="menu-button" to="/TwinPage"  style="color: #181a18; font-weight: bold; text-align: center;">디지털 트윈</router-link>
                   </div>
                 </b-sidebar>
-                
-                <div style="margin-left: 5% ;">
+
+                <div style="margin-left: 5%;">
                   <img src="../public/static/Dial-icon.jpg" alt="Icon Description" class="icon" @click="navigateHome">
                 </div>
               </td>
 
               <td style="width: 50%; text-align: right;">
-                <h1 class="main-title" style="font-size: 125%; padding-right: 3%;" >화재 관리자 페이지</h1>
-                <h2 class="sub-title" style="font-size: 80%; padding-right: 3%;">한밭대학교 자동화관 302호</h2>
+                <div>
+                  <h1 class="main-title" style="font-size: 110%; padding-right: 3%;" >화재 관리자 페이지</h1>
+                  <h2 class="sub-title" style="font-size: 90%; padding-right: 3%;">한밭대학교 자동화관 302호</h2>
+                </div>
+
               </td>
-              
+
             </tr>
           </table>
         </div>
 
         <table style="width: 100%; height: 100%; margin-top: -10px;">
           <tr>
+
             <td style="width: 50%; height: 50%; text-align: center; vertical-align: middle;">
-              <div class="weather-info"  style="width: 80%; height: 80%; margin-left: auto;margin">
-                <div style="margin: 10% 10% 10% 10%;">
-                  <h1 style="display: flex; align-items: center;">
+
+              <div class="weather-info"  style="width: 150px; height: 150px; margin-left: auto;margin">
+                <div style="margin: 10% 10% 10% 10%; display: block ">
+                  <h1 style="display: flex; align-items: center; margin-bottom:0% margin-top:0%">
                     <img src="../public/static/gps-icon.png" width="30pt" height="30pt" style="padding-right: 0px;">{{city}}
                   </h1>
                   <h2 style="font-size: 120%; font-style: italic;">{{weather}}</h2>
                   <h2 style="font-size: 120%;">{{temperature}} °C</h2>
                   <h2 style="font-size: 120%;">{{humidity}} %</h2>
                 </div>
-                
               </div>
+
             </td>
 
-            <td id ="final" style="width: 50%; height: 50%; text-align: center; vertical-align: middle;">
-              <div id="test" class="weather-info"  style="width: 80%; height: 80%; background-color: mediumseagreen; ">
+            <td style="width: 50%; height: 50%; text-align: center; vertical-align: middle;">
+              <div class="weather-info" :class="{ 'fire': final_prediction_str === '화재' }" style="width: 150px; height: 150px; background-color: mediumseagreen; ">
                 <div style="padding: 0pt; color: #ffffff;">현재 상태</div>
-                <h2 style="font-size: 250%; font-weight: bold; color: #ffffff;">{{final_prediction_str}}</h2> 
+                <div :class="{ 'blink': final_prediction_str === '화재' }">
+                  <h2 style="font-size: 250%; font-weight: bold; color: #ffffff;">{{final_prediction_str}}</h2>
+                </div>
               </div>
             </td>
           </tr>
         </table>
 
-        <div>
-          <router-view></router-view>
-        </div>
+        <div style="margin: 13px"></div>
+
+        <div><router-view></router-view></div>
 
       </body>
   </template>
@@ -196,27 +192,14 @@
   background-color: transparent /* 뒷배경색을 원하는 색상으로 설정 */
 }
 
-
-
- .menu-button {
-    display: block;
-    width: 100%;
-    background-color: #454648;
-    text-align: left;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 0;
-    border-bottom: 1px solid black;
-  }
-
-  .defalut {
+  .default {
     background-color: #454648;
   }
 
   .divider {
     border-top: 1px solid #ffffff48;
     margin: 5%;
-    width: 80%; 
+    width: 80%;
   }
 
   nav {
@@ -235,29 +218,13 @@
     border-collapse: collapse;
   }
 
-  table2 {
-    border-collapse: collapse ;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    width: 100%;
-  }
-
-  table3 {
-    border-collapse: collapse ;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    width: 100%;
-
-}
-
   .title-container {
     margin-bottom: 0%;
     display: flex;
   }
   .icon {
-  width: 60px;
+
+  width: 65px;
   height: 20px;
   margin-right: 0px;
   float: right;
@@ -266,37 +233,18 @@
 h1 {
     color: #181B1F;
     font-size: 150%;
-    font-weight: bold; 
-    text-align: center; 
-    margin: 5pt;
-    transition: all 0.3s ease; 
-}
-
-h2 {
-    color: #181B1F; 
-    font-size: 1em;
+    font-weight: bold;
     text-align: center;
     margin: 5pt;
     transition: all 0.3s ease;
 }
 
-h4 {
-    display: block;
-    margin-block-start: 0px;
-    margin-block-end: 0px;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-weight: bold;
-    text-align: left;
-}
-
-h5 {
-    display: block;
-    font-size: 0.83em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-weight: bold;
-    text-align: left;
+h2 {
+    color: #181B1F;
+    font-size: 1em;
+    text-align: center;
+    margin: 5pt;
+    transition: all 0.3s ease;
 }
 
   .main-title {
@@ -323,26 +271,34 @@ h5 {
     border-radius: 30px;
     box-shadow: -6px -6px 5px rgba(228, 226, 226, 0.8), 6px 6px 5px rgba(0,0,0,0.2);
 
-    text-align: center; 
+    text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     height: 180px;
-    padding: 5%; 
+    padding: 5%;
 }
 
+.fire {
+  background-color: red !important;
+}
+
+.weather-info p {
+    font-size: 15px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
 
 .final-prediction {
-  color: #ffffff; 
+  color: #ffffff;
   font-size: 2rem;
   font-weight: bold;
-  text-align: center; 
+  text-align: center;
   margin: 40px;
-  transition: all 0.3s ease; 
+  transition: all 0.3s ease;
 }
 .blink {
-  color:red;
   -webkit-animation: blink 0.5s ease-in-out infinite alternate;
   -moz-animation: blink 0.5s ease-in-out infinite alternate;
   animation: blink 0.5s ease-in-out infinite alternate;
@@ -410,5 +366,8 @@ h5 {
   font-size: 18px; /* 메뉴 버튼의 글자 크기를 설정 */
   background-color: #F8F8F8; /* 메뉴 버튼의 배경 색상을 설정 */
   box-shadow: -6px -6px 5px rgba(228, 226, 226, 0.8), 6px 6px 5px rgba(0,0,0,0.2);
+  padding: 0.5rem 1rem;
+  margin-top: 15px;
+  border: none;
 }
 </style>
