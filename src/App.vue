@@ -102,7 +102,7 @@
     created() {
         this.fetchAssetData();
         this.searchWeather();
-        this.interval = setInterval(this.fetchAssetData, 1000);
+        this.interval = setInterval(this.fetchAssetData, 15000);
         document.title = "diaL 화재 관리자 페이지";
     },
     components: { RouterLink, LiveSensorPageVue }

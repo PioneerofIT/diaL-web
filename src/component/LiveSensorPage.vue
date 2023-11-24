@@ -54,7 +54,7 @@ export default {
   mounted() {
     this.chpannel(4)
     this.fetchAssetData();
-    this.interval = setInterval(this.fetchAssetData, 3000);
+    this.interval = setInterval(this.fetchAssetData, 1000);
   },
 
   beforeDestroy() {
